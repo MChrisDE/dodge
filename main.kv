@@ -1,0 +1,38 @@
+<Player>:
+    size: (50, 50)
+    canvas:
+        Color:
+            rgb: (1, 1, 1)
+        Rectangle:
+            pos: root.pos
+            size: (50, 50)
+
+<UPDOWNRocket>:
+    size: (50, 450)
+    canvas:
+        Color:
+            rgb: (1, 0, 0)
+        Rectangle:
+            pos: root.pos
+            size: (50, 450)
+<LEFTRIGHTRocket>:
+    size: (450, 50)
+    canvas:
+        Color:
+            rgb: (1, 0, 0)
+        Rectangle:
+            pos: root.pos
+            size: (450, 50)
+<GameScreen>:
+    player: player
+    ud_rocket: ud_rocket
+    lr_rocket: lr_rocket
+    Player:
+        id:player
+    UPDOWNRocket:
+        id:ud_rocket
+        pos: (0, -450)
+    LEFTRIGHTRocket:
+        id:lr_rocket
+        pos: (-450, 0)
+

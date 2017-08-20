@@ -1,0 +1,93 @@
+from kivy.uix.widget import Widget
+from kivy.app import App
+from kivy.properties import ObjectProperty
+from kivy.clock import Clock
+from kivy.vector import Vector
+from random import randint
+import os
+
+os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
+from kivy.config import Config
+
+Config.set('graphics', 'width', '1000')
+Config.set('graphics', 'height', '1000')
+
+
+class GameScreen(Widget):
+    player = ObjectProperty(None)
+    ud_rocket = ObjectProperty(None)
+    e = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super(GameScreen, self).__init__(**kwargs)
+        self.player.pos = (500, 500)
+
+    def update(self, dt):
+        self.player.move()
+        self.ud_rocket.move()
+        self.lr_rocket.move()
+
+        if self.player.collide_widget(self.ud_rocket) or self.player.collide_widget(self.lr_rocket):
+            print("hit")
+
+
+class Player(Widget):
+    wannabe = [525, 525]
+    vector = Vector(0, 0)
+
+    def on_touch_move(self, touch):
+        self.wannabe = touch.pos
+
+    def on_touch_down(self, touch):
+        self.wannabe = touch.pos
+
+    def move(self):
+        self.vector = Vector((self.wannabe[0] - 25 - self.pos[0]) * 0.03,
+                             (self.wannabe[1] - 25 - self.pos[1]) * 0.03)
+        if self.vector.length() > 10:
+            self.vector = self.vector.normalize() * 10
+        self.pos = Vector(*self.vector) + self.pos
+
+
+class UPDOWNRocket(Widget):
+    vector = Vector(0, 6)
+    direction = 0
+
+    def move(self):
+        if self.pos[1] > 999 or self.pos[1] < -451:
+            if self.vector[1] < 15:
+                self.vector[1] = self.vector[1] * 1.2
+            self.direction = randint(0, 1) * 180
+            if self.direction == 0:
+                self.pos = (randint(0, 950), -450)
+            else:
+                self.pos = (randint(0, 950), 999)
+        self.pos = Vector(*self.vector).rotate(self.direction) + self.pos
+
+
+class LEFTRIGHTRocket(Widget):
+    vector = Vector(6, 0)
+    direction = 0
+
+    def move(self):
+        if self.pos[0] > 999 or self.pos[0] < -451:
+            if self.vector[0] < 15:
+                self.vector[0] = self.vector[0] * 1.1
+            self.direction = randint(0, 1) * 180
+            if self.direction == 0:
+                self.pos = (-450, randint(0, 950))
+            else:
+                self.pos = (999, randint(0, 950))
+        self.pos = Vector(*self.vector).rotate(self.direction) + self.pos
+
+
+class DodgeThisApp(App):
+    def build(self):
+        self.load_kv('main.kv')
+        game = GameScreen()
+        Clock.schedule_interval(game.update, 1.0 / 60.0)
+        return game
+
+
+if __name__ == '__main__':
+    DodgeThisApp().run()
