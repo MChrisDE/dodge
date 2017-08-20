@@ -1,6 +1,6 @@
 from kivy.uix.widget import Widget
 from kivy.app import App
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty
 from kivy.clock import Clock
 from kivy.vector import Vector
 from random import randint
@@ -9,14 +9,15 @@ import os
 os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 from kivy.config import Config
 
-Config.set('graphics', 'width', '1000')
+Config.set('graphics', 'width', '1500')
 Config.set('graphics', 'height', '1000')
 
 
 class GameScreen(Widget):
     player = ObjectProperty(None)
     ud_rocket = ObjectProperty(None)
-    e = ObjectProperty(None)
+    lr_rocket = ObjectProperty(None)
+    sideboard = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(GameScreen, self).__init__(**kwargs)
@@ -28,7 +29,7 @@ class GameScreen(Widget):
         self.lr_rocket.move()
 
         if self.player.collide_widget(self.ud_rocket) or self.player.collide_widget(self.lr_rocket):
-            print("hit")
+            self.sideboard.hits += 1
 
 
 class Player(Widget):
@@ -36,10 +37,12 @@ class Player(Widget):
     vector = Vector(0, 0)
 
     def on_touch_move(self, touch):
-        self.wannabe = touch.pos
+        if touch.pos[0] < 1000 and touch.pos[1] < 1000:
+            self.wannabe = touch.pos
 
     def on_touch_down(self, touch):
-        self.wannabe = touch.pos
+        if touch.pos[0] < 1000 and touch.pos[1] < 1000:
+            self.wannabe = touch.pos
 
     def move(self):
         self.vector = Vector((self.wannabe[0] - 25 - self.pos[0]) * 0.03,
@@ -79,6 +82,10 @@ class LEFTRIGHTRocket(Widget):
             else:
                 self.pos = (999, randint(0, 950))
         self.pos = Vector(*self.vector).rotate(self.direction) + self.pos
+
+
+class SideBoard(Widget):
+    hits = NumericProperty(0)
 
 
 class DodgeThisApp(App):

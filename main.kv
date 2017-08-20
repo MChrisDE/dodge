@@ -23,10 +23,21 @@
         Rectangle:
             pos: root.pos
             size: (450, 50)
+<SideBoard>:
+    canvas:
+        Color:
+            rgb: (0, 0, 1)
+        Rectangle:
+            pos: (1000,0)
+            size: (root.width, root.height)
+    Label:
+        pos: (1000,0)
+        text: "hits: " + str(root.hits)
 <GameScreen>:
     player: player
     ud_rocket: ud_rocket
     lr_rocket: lr_rocket
+    sideboard: sideboard
     Player:
         id:player
     UPDOWNRocket:
@@ -35,4 +46,10 @@
     LEFTRIGHTRocket:
         id:lr_rocket
         pos: (-450, 0)
+    SideBoard:
+        pos: (1000,0)
+        size: (root.width-1000, root.height)
+        id: sideboard
+
+
 
