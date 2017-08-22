@@ -66,7 +66,7 @@ class UPDOWNRocket(Widget):
                 self.pos = (randint(0, int(Window.width * 0.7552)), -Window.height * 0.417)
             else:
                 self.pos = (randint(0, int(Window.width * 0.7552)), Window.height * 0.925)
-        self.pos = Vector(*self.vector).rotate(self.direction) + self.pos
+        self.pos = Vector(self.vector).rotate(self.direction) + self.pos
 
 
 class LEFTRIGHTRocket(Widget):
