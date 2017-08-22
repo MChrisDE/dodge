@@ -36,7 +36,6 @@ class GameScreen(FloatLayout):
 class Player(Widget):
     wannabe = [Window.width / 2, Window.height / 2]
     vector = Vector(0, 0)
-
     def on_touch_move(self, touch):
         if touch.pos[0] < 1500 and touch.pos[1] < 1500:
             self.wannabe = touch.pos
