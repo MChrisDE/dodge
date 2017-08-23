@@ -44,15 +44,17 @@ class Game(FloatLayout):
 
 
 class Player(Widget):
-    wannabe = [Window.width*0.390625, Window.height / 2]
+    wannabe = [Window.width * 0.390625, Window.height / 2]
     vector = Vector(0, 0)
 
     def on_touch_move(self, touch):
-        if touch.pos[0] < 1500 and touch.pos[1] < 1500:
+        if Window.height * .017 <= touch.pos[0] < Window.width * .76325 and Window.height * .031 < touch.pos[1] \
+                < Window.height * .968:
             self.wannabe = touch.pos
 
     def on_touch_down(self, touch):
-        if touch.pos[0] < 1500 and touch.pos[1] < 1500:
+        if Window.height * .017 <= touch.pos[0] < Window.width * .76325 and Window.height * .031 < touch.pos[1] \
+                < Window.height * .968:
             self.wannabe = touch.pos
 
     def move(self):
@@ -63,7 +65,7 @@ class Player(Widget):
         self.pos = Vector(self.vector) + self.pos
 
     def reset(self):
-        self.wannabe = [Window.width*0.390625, Window.height / 2]
+        self.wannabe = [Window.width * 0.390625, Window.height / 2]
         self.pos = (Window.width / 2, Window.height / 2)
 
 

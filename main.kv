@@ -52,7 +52,13 @@
         id: sideboard
         Button:
             pos: (root.width*(0.78125), 0)
+            text: "Quit"
+            on_press: app.stop()
+            size: (root.width*(1-0.78125), root.height*0.25)
+            font_size: 50
+        Button:
+            pos: (root.width*(0.78125), root.height*0.25)
             text: "Restart"
             on_press: root.reset()
-            size: (root.width*(1-0.78125), root.width*0.10)
+            size: (root.width*(1-0.78125), root.height*0.25)
             font_size: 50
