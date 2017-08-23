@@ -1,3 +1,4 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
 <Player>:
     canvas:
         Color:
@@ -27,10 +28,8 @@
         Rectangle:
             pos: self.pos
             size: self.size
-    Label:
-        pos: (root.x + 50, root.y)
-        text: "hits: " + str(root.hits)
-<GameScreen>:
+
+<Game>:
     player: player
     ud_rocket: ud_rocket
     lr_rocket: lr_rocket
@@ -51,6 +50,9 @@
         pos: (root.width*(0.78125), 0)
         size_hint: (root.width, root.height)
         id: sideboard
-
-
-
+        Button:
+            pos: (root.width*(0.78125), 0)
+            text: "Restart"
+            on_press: root.reset()
+            size: (root.width*(1-0.78125), root.width*0.10)
+            font_size: 50
