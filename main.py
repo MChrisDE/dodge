@@ -21,7 +21,6 @@ class Game(FloatLayout):
     ud_rocket = ObjectProperty(None)
     lr_rocket = ObjectProperty(None)
     sideboard = ObjectProperty(None)
-    hits = NumericProperty(0)
 
     def __init__(self, **kwargs):
         super(Game, self).__init__(**kwargs)
@@ -32,7 +31,6 @@ class Game(FloatLayout):
         self.ud_rocket.move()
         self.lr_rocket.move()
         if self.player.collide_widget(self.ud_rocket) or self.player.collide_widget(self.lr_rocket):
-            self.hits += 1
             self.clock.cancel()
 
     def reset(self):
